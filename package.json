@@ -1,6 +1,6 @@
 {
   "name": "brianda-router",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "API router like express router for lambda functions",
   "main": "index.js",
   "scripts": {

@@ -30,6 +30,8 @@ const Pipeline = (() => {
       this.headers = {...this.headers, ...header};
     },
     send: function send(data) {
+      signal.continue = false;
+
       return Promise.resolve(resHandler(this.statusCode, data, this.headers));
     }
   });

@@ -55,6 +55,19 @@ npm install brianda-router
 
 ## Using
 
+### First required step.
+We need first, modify our ```serverless.yml```
+```yaml
+    v2-app:
+        handler: handlers/app.main
+        events:
+          - http:
+              path: v2/{proxy+}
+              method: ANY
+              cors: true
+              authorizer: aws_iam
+```
+
 Here is an inplementation example:
 
 **Note: Brianda router is ever async based functions.**

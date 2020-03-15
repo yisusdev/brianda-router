@@ -6,8 +6,15 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yisusdev/brianda-router.git"
+  },
+  "engines" : { "node" : ">=10" },
   "author": "Bruno Pineda",
   "license": "ISC",
+  "homepage": "https://github.com/yisusdev/brianda-router",
+  "keywords": ["aws", "lambda", "serverless", "router", "express", "functions", "javascript"],
   "dependencies": {
     "path-to-regexp": "^6.1.0"
   }

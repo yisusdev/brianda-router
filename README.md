@@ -171,6 +171,7 @@ When we want to do anything with request data, before or after of handler contro
  - We will work in a new features like no async inclusion and avoid ```return``` statement in each function to return the response.
  - By now we decided leave out to the context object, however we 'll work to include in the request.
  - All implicit method not supported by now.
+ 
  # Contributions
  For any contrbution, please contact me.
  - Bruno Pineda - [bpinedah](https://github.com/bpinedah)

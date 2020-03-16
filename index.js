@@ -160,7 +160,7 @@ const Brianda = (() => {
         const routesFound = this._routes.filter(findPredicate);
 
         // ROUTES FOUND VALIDATION
-        if (routesFound.length === 0) {
+        if ((routesFound.length === 0) || (routesFound.length === 1 && routesFound[0].method === "*")) {
           return resHandler(404, { message: "Oops route not found on router" });
         }
 

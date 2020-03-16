@@ -170,9 +170,11 @@ When we want to do anything with request data, before or after of handler contro
  - The entire native event request from Lambda API Gateway is present ever in each request, thus always will can access to the object.
  - We will work in a new features like no async inclusion and avoid ```return``` statement in each function to return the response.
  - By now we decided leave out to the context object, however we 'll work to include in the request.
- 
+ - All implicit method not supported by now.
  # Contributions
- 
  For any contrbution, please contact me.
  - Bruno Pineda - [bpinedah](https://github.com/bpinedah)
  
+ ## Changes log
+ 
+ - v1.0.2 - Fix unhandled error for all ```(*)``` method through ```use()``` function by now not supported.

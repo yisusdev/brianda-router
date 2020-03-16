@@ -52,7 +52,7 @@ const Pipeline = (() => {
           signal.continue = true;
           return response;
         }
-      )) : e => f[0](e, _res(signal)()).then(r => (r));
+      )) : e => f[0](e, _res(signal)(), _res(signal)().send).then(r => (r));
   };
 
   return {

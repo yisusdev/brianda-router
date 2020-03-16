@@ -2,7 +2,7 @@
 API router like express for lambda functions.
 
 ## Overview
-Brianda router is a API router for AWS Lambda functions with serverless framework, this library extract the express basics, to create a router for Lambda functions.
+Brianda router is an API router for AWS Lambda functions with serverless framework, this library extract the express basics, to create a router for Lambda functions.
 
 ## When is necessary use a router?
 Well, often we create many functions handlers for many resources in our ```serveless.yml``` like:

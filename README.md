@@ -81,6 +81,8 @@ Here is an inplementation example:
       // ... Do anything with req
       return res.send("Hello Brianda!");
     });
+    
+    exports.main = app.toLambda();
 ```
 
 When we use the next middleware execution, we have to return the next function with event to pass to the next middleware function like this:
@@ -112,6 +114,8 @@ When we use the next middleware execution, we have to return the next function w
     });
     
     app.use('/admin', admin);
+    
+    exports.main = app.toLambda();
 ```
 
 ### Working with path parameters
@@ -177,5 +181,5 @@ When we want to do anything with request data, before or after of handler contro
  - Bruno Pineda - [bpinedah](https://github.com/bpinedah)
  
  ## Changes log
- 
  - v1.0.2 - Fix unhandled error for all ```(*)``` method through ```use()``` function by now not supported.
+ - v1.0.3 - More description on documentation about usage.

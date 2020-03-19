@@ -208,3 +208,4 @@ The response end event object, have the next properties:
  ## Changes log
  - v1.0.2 - Fix unhandled error for all ```(*)``` method through ```use()``` function by now not supported.
  - v1.0.3 - More description on documentation about usage.
+ - v1.2.0 - Event emitters added (end event by now).

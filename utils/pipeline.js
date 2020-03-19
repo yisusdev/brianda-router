@@ -1,3 +1,4 @@
+const Emitter = require("events").EventEmitter;
 const ResponseHandler = require("./response-handler");
 
 const { response: resHandler } = ResponseHandler;
@@ -19,22 +20,58 @@ const Pipeline = (() => {
 
   /**
    * @description Resolve function to exit from pipeline
-   * @param signal Flag to continue or not on pipeline
+   * @param params Params array with [signal, emitter, evt]
    * @returns {*}
    * @private
    */
-  const _res = signal => () => ({
-    statusCode: 200,
-    headers: {},
-    setHeader: function setHeader(header) {
-      this.headers = {...this.headers, ...header};
-    },
-    send: function send(data) {
-      signal.continue = false;
+  const _res = (...params) => () => {
+    const [ signal, emitter, evt ] = params;
+    return {
+      statusCode: 200,
+      headers: {},
+      /**
+       * @description Add new header to headers response
+       * @param header Header to be added
+       */
+      setHeader: function setHeader(header) {
+        this.headers = {...this.headers, ...header};
+      },
+      /**
+       * @description Event listener
+       * @param event Event to listen
+       * @param cb Callback listener
+       */
+      on: function on(event, cb) {
+        emitter.on(event, data => {
 
-      return Promise.resolve(resHandler(this.statusCode, data, this.headers));
-    }
-  });
+          // Remove listener once called
+          emitter.removeListener(event, cb);
+
+          // Callback execution
+          cb(data);
+        });
+      },
+      /**
+       * @description Send a response
+       * @param data Data to send
+       * @returns {Promise.<*>}
+       */
+      send: function send(data) {
+        signal.continue = false;
+
+        // Event emit on end response
+        emitter.emit("end", {
+          headers: this.headers,
+          statusCode: this.statusCode,
+          params: evt.params,
+          query: evt.query,
+          body: data
+        });
+
+        return Promise.resolve(resHandler(this.statusCode, data, this.headers));
+      }
+    };
+  };
 
   /**
    * @description Create function with middlewares
@@ -44,15 +81,16 @@ const Pipeline = (() => {
    */
   const _createPipeline = f => {
     const signal = { continue: true };
+    const event = new Emitter();
 
     return f.length > 1 ? f.reduce((before, after, idx) =>
-      e => before(e , _res(signal)(), _next(idx, f.length)).then(r => {
-          const response = signal.continue ? after(...[...r, _res(signal)(), _next(idx, f.length)]) : r;
+      e => before(e , _res(signal, event, e)(), _next(idx, f.length)).then(r => {
+          const response = signal.continue ? after(...[...r, _res(signal, event, e)(), _next(idx, f.length)]) : r;
 
           signal.continue = true;
           return response;
         }
-      )) : e => f[0](e, _res(signal)(), _res(signal)().send).then(r => (r));
+      )) : e => f[0](e, _res(signal, event, e)(), _res(signal, event, e)().send).then(r => (r));
   };
 
   return {

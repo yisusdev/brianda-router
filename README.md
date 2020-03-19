@@ -169,6 +169,31 @@ When we want to do anything with request data, before or after of handler contro
     })
 ```
 
+### Response events
+If we need to listen when the request is finished, we have `res.on(event, cb)` method to add new listener to any event. By now the `end` event is the only one available, we work hard to add new events.
+```js
+    app.use(async (req, res, next) => {
+      res.on("end", data => {
+        console.log(data); // {Response end data}
+        return next(req);
+      });
+    });
+```
+
+### Response end object
+The response end event object, have the next properties:
+```js
+    const endObject = {
+      headers: {},
+      statusCode: 200,
+      params: {},
+      query: {},
+      body: {} // or any data
+    };
+    
+    console.log(endObject);
+```
+
 ## Notes
 
  - The entire native event request from Lambda API Gateway is present ever in each request, thus always will can access to the object.
@@ -176,7 +201,7 @@ When we want to do anything with request data, before or after of handler contro
  - By now we decided leave out to the context object, however we 'll work to include in the request.
  - All implicit method not supported by now.
  
- # Contributions
+ ## Contributions
  For any contrbution, please contact me.
  - Bruno Pineda - [bpinedah](https://github.com/bpinedah)
  

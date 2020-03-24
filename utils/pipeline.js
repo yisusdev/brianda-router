@@ -84,12 +84,9 @@ const Pipeline = (() => {
     const event = new Emitter();
 
     return f.length > 1 ? f.reduce((before, after, idx) =>
-      e => before(e , _res(signal, event, e)(), _next(idx, f.length)).then(r => {
-          const response = signal.continue ? after(...[...r, _res(signal, event, e)(), _next(idx, f.length)]) : r;
-
-          signal.continue = true;
-          return response;
-        }
+      e => before(e , _res(signal, event, e)(), _next(idx, f.length)).then(r => (
+          signal.continue ? after(...[...r, _res(signal, event, e)(), _next(idx, f.length)]) : r
+        )
       )) : e => f[0](e, _res(signal, event, e)(), _res(signal, event, e)().send).then(r => (r));
   };
 

@@ -210,3 +210,4 @@ The response end event object, have the next properties:
  - v1.0.3 - More description on documentation about usage.
  - v1.2.0 - Event emitters added (end event by now).
  - v1.2.1 - Fix an error on Pipeline functions.
+ - v1.2.2 - Fix router proxy detection regex.

@@ -154,7 +154,7 @@ const Brianda = (() => {
 
         // PARAMS
         const { resource, path, httpMethod: method, queryStringParameters, body } = event;
-        const [ awsPath ] = resource.split('/{proxy*}');
+        const [ awsPath ] = resource.split(/(\/\{\w+\*\})|(\/\{\w+\+\})/);
         const [, routerPath] = path.split(awsPath);
         const findPredicate = this._findAndComposeRoute(method.toLowerCase(), routerPath);
         const routesFound = this._routes.filter(findPredicate);

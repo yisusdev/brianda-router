@@ -68,6 +68,7 @@ const Brianda = (() => {
           matchValidation;
 
         if (selected) {
+          route.originalUrl = _path;
           route.params = _params.params ? {..._params.params} : {};
         }
 
@@ -168,9 +169,11 @@ const Brianda = (() => {
         const functions = routesFound.map(i => ([...i.middlewares]));
         const lastRoute = [...routesFound].pop();
         const pathParams = lastRoute.params;
+        const originalUrl = lastRoute.originalUrl;
         const fns = _toFlat(functions);
 
         // ADD PARAMS AND BODY TO NATIVE EVENT
+        event.originalUrl = originalUrl;
         event.params = pathParams;
         event.query = queryStringParameters || {};
         event.body = body && method.toLowerCase() !== "get" ? body : {};
